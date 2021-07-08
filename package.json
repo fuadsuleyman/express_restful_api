@@ -1,0 +1,11 @@
+{
+  "name": "simple_express_restfull_app",
+  "version": "1.0.0",
+  "description": "simple restfull api",
+  "main": "app.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "Fuad Suleymanov",
+  "license": "ISC"
+}

@@ -1,9 +1,13 @@
 const express = require('express');
 const bodyParser = require('body-parser');
+const mongoose = require('mongoose');
 
 const app = express();
 
 const feedRoutes = require('./routes/feed');
+
+const MONGODB_URI =
+'mongodb+srv://fuads:wLoyopyig03cXY9a@cluster0.oepjk.mongodb.net/feedDB?retryWrites=true&w=majority'
 
 // express 4.16-dan asagi versiyalarda body-parser istifade olunur 
 // app.use(bodyParser.json());
@@ -24,4 +28,12 @@ app.use((req, res, next) => {
 
 app.use('/feed', feedRoutes);
 
-app.listen(8080);
+mongoose.connect(
+    MONGODB_URI,
+    {useNewUrlParser: true, useUnifiedTopology: true}
+    )
+    .then(result => {
+        app.listen(8080);
+    })
+    .catch(err => console.log(err))
+

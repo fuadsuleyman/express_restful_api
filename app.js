@@ -1,3 +1,5 @@
+const path = require('path');
+
 const express = require('express');
 const bodyParser = require('body-parser');
 const mongoose = require('mongoose');
@@ -14,6 +16,8 @@ const MONGODB_URI =
 
 // express 4.16-dan yuxari versiyalarda body-parser istifade olunmur
 app.use(express.json());
+// images papkasini istifade etmek ucun
+app.use('/images', express.static(path.join(__dirname, 'images')));
 
 // bu asagidaki form-dan data cekende lazimdi
 // app.use(express.urlencoded({ extended: true }));

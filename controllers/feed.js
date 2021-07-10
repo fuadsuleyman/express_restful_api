@@ -24,12 +24,19 @@ exports.createPost = (req, res, next) => {
         error.statusCode = 422;
         throw error;
     }
+    if(!req.file) {
+        const error = new Error('No images provided.');
+        error.statusCode = 422;
+        throw error;
+    }
+    // bu asagidaki req.file.path mutlet vasitesi ile yaranir, app.js de app.use(mutler) ile
+    const imageUrl = req.file.path;
     const content = req.body.content;
     const title = req.body.title;
     const post = new Post({
         title: title,
         content: content,
-        imageUrl: 'images/book1.jpg',
+        imageUrl: imageUrl,
         creator: {name: 'FuadS'}
     });
     post.save()

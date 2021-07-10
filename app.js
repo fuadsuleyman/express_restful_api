@@ -3,6 +3,7 @@ const path = require('path');
 const express = require('express');
 const bodyParser = require('body-parser');
 const mongoose = require('mongoose');
+const multer = require('multer');
 
 const app = express();
 
@@ -14,10 +15,34 @@ const MONGODB_URI =
 // express 4.16-dan asagi versiyalarda body-parser istifade olunur 
 // app.use(bodyParser.json());
 
+// file upload
+const fileStorage = multer.diskStorage({
+    destination: (req, file, cb) => {
+        cb(null, 'images');
+    },
+    filename: (req, file, cb) => {
+        cb(null, new Date().toISOString() + '-' + file.originalname);
+    }
+});
+
+const fileFilter = (req, file, cb) =>{
+    if(
+        file.mimetype === 'image/png' ||
+        file.mimetype === 'image/jpg' ||
+        file.mimetype === 'image/jpeg'
+    ) {
+        cb(null, true);
+    } else {
+        cb(null, false);
+    }
+}
+
 // express 4.16-dan yuxari versiyalarda body-parser istifade olunmur
 app.use(express.json());
 // images papkasini istifade etmek ucun
 app.use('/images', express.static(path.join(__dirname, 'images')));
+
+app.use(multer({storage:fileStorage, fileFilter: fileFilter}).single('image'));
 
 // bu asagidaki form-dan data cekende lazimdi
 // app.use(express.urlencoded({ extended: true }));

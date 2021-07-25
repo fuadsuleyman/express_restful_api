@@ -69,7 +69,7 @@ app.use((error, req, res, next) => {
 
 mongoose.connect(
     MONGODB_URI,
-    {useNewUrlParser: true, useUnifiedTopology: true}
+    {useNewUrlParser: true, useUnifiedTopology: true, useFindAndModify: false}
     )
     .then(result => {
         app.listen(8080);

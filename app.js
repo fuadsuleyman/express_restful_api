@@ -72,7 +72,21 @@ mongoose.connect(
     {useNewUrlParser: true, useUnifiedTopology: true, useFindAndModify: false}
     )
     .then(result => {
-        app.listen(8080);
-    })
-    .catch(err => console.log(err))
+        const server = app.listen(8080);
+        const io = require('socket.io')(server);
+        io.on('connection', socket => {
+          console.log('Client connected');
+        });
+      })
+      .catch(err => console.log(err));
+    // .then(result => {
+    //    const server = app.listen(8080);
+    //    const io = require('socket.io')(server);
+    //    io.on('connection', socket => {
+    //        console.log('Client connected');
+    //    })
+    // })
+    // .catch(err => console.log(err))
 
+    
+    

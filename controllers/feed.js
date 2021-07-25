@@ -1,6 +1,8 @@
 const fs = require('fs');
 const path = require('path');
 
+const io = require('../socket');
+
 const { validationResult } = require('express-validator');
 const Post = require('../models/post');
 const User = require('../models/user');
@@ -228,6 +230,11 @@ exports.createPost = async (req, res, next) => {
         creator = user;
         user.posts.push(post);
         await user.save();
+        // butun connection-u olan user-lere posts cannal-i uzre melumat oturur
+        io.getIO().emit('posts', {
+            action: 'create',
+            post: { ...post._doc, creator: { _id: req.userId, name: user.name }}
+        })
         res.status(201).json({
             message: 'Post created succussfully!',
             post: post,

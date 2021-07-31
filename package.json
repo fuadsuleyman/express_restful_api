@@ -4,7 +4,7 @@
   "description": "simple restfull api",
   "main": "app.js",
   "scripts": {
-    "test": "mocha",
+    "test": "mocha --timeout 5000",
     "start": "nodemon app.js"
   },
   "author": "Fuad Suleymanov",

@@ -58,96 +58,6 @@ exports.getPosts = async (req, res, next) => {
         }
 }
 
-
-// exports.getStatus = (req, res, next) => {
-//     console.log('req.userId: ' + req.userId);
-//     User.findById(req.userId)
-//         .then(user => {
-//             if(!user){
-//                 const err = new Error('User not found!');
-//                 err.statusCode = 404;
-//                 throw err;
-//             }
-//             res.status(200).json({
-//                 status: user.status
-//             })
-//         })
-//         .catch(err => {
-//             if(!err.statusCode){
-//                 err.statusCode = 500;
-//             }
-//             next(err); 
-//         })
-// }
-
-// async & await version
-exports.getStatus = async (req, res, next) => {
-    // console.log('req.userId: ' + req.userId);    
-    try {
-        const user = await User.findById(req.userId)
-        if(!user){
-            const err = new Error('User not found!');
-            err.statusCode = 404;
-            throw err;
-        }
-        res.status(200).json({
-            status: user.status
-        })
-    } catch (err) {
-        if(!err.statusCode){
-            err.statusCode = 500;
-        }
-        next(err);
-    }
-}
-
-
-// exports.updateStatus = (req, res, next) => {
-//     const newStatus = req.body.status;
-//     User.findById(req.userId)
-//         .then(user => {
-//             if(!user){
-//                 const err = new Error('User not found!');
-//                 err.statusCode = 404;
-//                 throw err;
-//             }
-//             user.status = newStatus;
-//             return user.save();
-//         })
-//         .then(result => {
-//             res.status(200).json({message: 'User status updated'})
-//         })
-//         .catch(err => {
-//             if(!err.statusCode){
-//                 err.statusCode = 500;
-//             }
-//             next(err);
-//     })
-// }
-
-
-// async & await version
-exports.updateStatus = async (req, res, next) => {
-    const newStatus = req.body.status;
-    try {
-        const user = await User.findById(req.userId)
-        if(!user){
-            const err = new Error('User not found!');
-            err.statusCode = 404;
-            throw err;
-        }
-        user.status = newStatus;
-        await user.save(); 
-        res.status(200).json({message: 'User status updated'})
-    } catch (err) {
-        if(!err.statusCode){
-            err.statusCode = 500;
-        }
-        next(err);
-    }
-}
-
-
 // exports.createPost = (req, res, next) => {
 //     const errors = validationResult(req);
 //     if(!errors.isEmpty()){
@@ -296,7 +206,6 @@ exports.getPost = async (req, res, next) => {
     }
 }
 
-
 // exports.updatePost = (req, res, next) => {
 //     const postId = req.params.postId;
 //     const errors = validationResult(req);
@@ -401,7 +310,6 @@ exports.updatePost = async (req, res, next) => {
     }
 }
 
-
 // exports.deletePost = (req, res, next) => {
 //     const postId = req.params.postId;
 //     Post.findById(postId)
@@ -475,9 +383,6 @@ exports.deletePost = async (req, res, next) => {
     }
     
 }
-
-
-
 
 const clearImage = filePath => {
     filePath = path.join(__dirname, '..', filePath);

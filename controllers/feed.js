@@ -135,12 +135,12 @@ exports.createPost = async (req, res, next) => {
     
     try {
         await post.save()
-        console.log('req.userId: ' + req.userId)
+        // console.log('req.userId: ' + req.userId)
         const user = await User.findById(req.userId);
-        console.log("user: " + user.name);
+        // console.log("user: " + user.name);
         creator = user;
         user.posts.push(post);
-        await user.save();
+        const savedUser = await user.save();
         // butun connection-u olan user-lere posts cannal-i uzre melumat oturur
         io.getIO().emit('posts', {
             action: 'create',
@@ -153,7 +153,8 @@ exports.createPost = async (req, res, next) => {
                 _id: user._id,
                 name: user.name
             }
-        })
+        });
+        return savedUser;
     } catch(err) {
         if(!err.statusCode){
             err.statusCode= 500;

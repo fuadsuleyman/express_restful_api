@@ -167,7 +167,7 @@ exports.login = async (req, res, next) => {
 
 // async & await version
 exports.getStatus = async (req, res, next) => {
-    // console.log('req.userId: ' + req.userId);    
+    console.log('req.userId: ' + req.userId);    
     try {
         const user = await User.findById(req.userId)
         if(!user){

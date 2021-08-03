@@ -189,7 +189,7 @@ exports.createPost = async (req, res, next) => {
 exports.getPost = async (req, res, next) => {
     const postId = req.params.postId;
     try{
-        const post = await Post.findById(postId);
+        const post = await Post.findById(postId).populate('creator');
         if(!post){
             const error = new Error('Counl not find a post!');
             error.statusCode = 404;

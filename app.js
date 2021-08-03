@@ -10,8 +10,7 @@ const app = express();
 const feedRoutes = require('./routes/feed');
 const authRoutes = require('./routes/auth');
 
-const MONGODB_URI =
-'mongodb+srv://fuads:wLoyopyig03cXY9a@cluster0.oepjk.mongodb.net/feedDB?retryWrites=true&w=majority'
+const MONGODB_URI = process.env.MONGO_DB_URI
 
 // express 4.16-dan asagi versiyalarda body-parser istifade olunur 
 // app.use(bodyParser.json());

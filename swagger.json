@@ -16,7 +16,7 @@
           "name": "Authorization"
       }
     },
-    "host": "localhost:8080",
+    "host": "express-restfull-api.herokuapp.com",
     "basePath": "/",
     "tags": [
       {

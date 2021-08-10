@@ -3,6 +3,9 @@
   "version": "1.0.0",
   "description": "simple restfull api",
   "main": "app.js",
+  "engines": {
+    "node": "14.16.0"
+  },
   "scripts": {
     "test": "mocha --timeout 10000",
     "start": "NODE_ENV=production MONGO_DB_URI=mongodb+srv://fuads:wLoyopyig03cXY9a@cluster0.oepjk.mongodb.net/feedDB?retryWrites=true&w=majority node app.js",

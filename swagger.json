@@ -1,0 +1,323 @@
+{
+    "swagger": "2.0",
+    "info": {
+      "version": "1.0.0",
+      "title": "Feed Project CRUD",
+      "description": "Feed Project API",
+      "license": {
+        "name": "MIT",
+        "url": "https://opensource.org/licenses/MIT"
+      }
+    },
+    "securityDefinitions": {
+      "Bearer": {
+          "type": "apiKey",
+          "in": "header",
+          "name": "Authorization"
+      }
+    },
+    "host": "localhost:8080",
+    "basePath": "/",
+    "tags": [
+      {
+        "name": "Feed",
+        "description": "API for feed in the system"
+      }
+    ],
+    "schemes": ["http", "https"],
+    "consumes": ["application/json"],
+    "produces": ["application/json"],
+    "definitions": {
+      "Post": {
+        "required": ["title", "content", "creator"],
+        "properties": {
+          "title": {
+            "type": "string"
+          },
+          "imageUrl":{
+            "type":"string"
+          },
+          "content": {
+            "type": "string"
+          },
+          "creator": {
+            "type": "string"
+          }
+        }
+      },
+      "User":{
+        "required": ["email", "password", "name"],
+        "properties": {
+          "email": {
+            "type":"string"
+          },
+          "password":{
+            "type":"string"
+          },
+          "name":{
+            "type":"string"
+          },
+          "status":{
+            "type":"string"
+          },
+          "posts":{
+            "type":"array"
+          }
+        }
+      }
+     
+    },
+    "paths": {
+        "/auth/signup":{
+          "put": {
+            "tags": ["Create User"],
+            "description": "Create new user in system (signup)",
+            "parameters": [
+              {
+                "name": "body",
+                "in": "body",
+                "description": "User that we want to create",
+                "schema": {
+                  "$ref": "#/definitions/User"
+                }
+              }
+            ],
+            "produces": ["application/json"],
+            "responses": {
+              "201": {
+                "description": "New user is created",
+                "schema": {
+                  "$ref": "#/definitions/User"
+                }
+                },
+              "400":{
+                "description": "Failed, Bad user data."
+              }
+            }
+          }
+        },
+        "/auth/login":{
+          "post": {
+            "tags": ["Login User"],
+            "description": "Login to system (login)",
+            "parameters": [
+              {
+                "name": "body",
+                "in": "body",
+                "description": "Login with email and password",
+                "schema": {
+                  "$ref": "#/definitions/User"
+                }
+              }
+            ],
+            "produces": ["application/json"],
+            "responses": {
+              "200": {
+                "description": "Authorized in sistem",
+                "schema": {
+                  "$ref": "#/definitions/User"
+                }
+                },
+              "401":{
+                "description": "Failed, Bad login data."
+              }
+            }
+          }
+        },
+        "/auth/status": {
+          "get": {
+            "tags": ["Get Status"],
+            "description": "Get status of authorized in system user, before try it add Bearer <token> to Authorize",
+            "security": [
+              {
+                  "Bearer": []
+              }
+          ],
+            "responses": {
+              "200": {
+                "description": "OK",
+                "schema": {
+                  "$ref": "#/definitions/Post"
+                }
+              }
+            }
+          }
+        },
+        "/auth/update-status": {
+          "patch": {
+            "tags": ["Update Status"],
+            "description": "Update status of authorized in system user, before try it add Bearer <token> to Authorize",
+            "security": [
+              {
+                  "Bearer": []
+              }
+            ],
+            "parameters": [
+              {
+                "name": "body",
+                "in": "body",
+                "description": "Update only user status",
+                "schema": {
+                  "$ref": "#/definitions/User"
+                }
+              }
+            ],
+            "produces": ["application/json"],
+            "responses": {
+              "200": {
+                "description": "Status updated",
+                "schema": {
+                  "$ref": "#/definitions/User"
+                }
+                },
+              "400":{
+                "description": "Failed, Bad status data."
+              }
+            }
+          }
+        },
+        "/feed/posts": {
+          "get": {
+            "tags": ["Get Posts"],
+            "description": "Get all posts in system, before try it add Bearer <token> to Authorize",
+            "security": [
+              {
+                  "Bearer": []
+              }
+          ],
+            "responses": {
+              "200": {
+                "description": "OK",
+                "schema": {
+                  "$ref": "#/definitions/Post"
+                }
+              }
+            }
+          }
+        },
+        "/feed/post": {
+          "post": {
+            "tags": ["Create Post"],
+            "description": "Create new post in system, before try it add Bearer <token> to Authorize",
+            "security": [
+              {
+                  "Bearer": []
+              }
+            ],
+            "parameters": [
+              {
+                "name": "body",
+                "in": "body",
+                "description": "Post that we want to create",
+                "schema": {
+                  "$ref": "#/definitions/Post"
+                }
+              }
+            ],
+            "produces": ["application/json"],
+            "responses": {
+              "200": {
+                "description": "New post is created",
+                "schema": {
+                  "$ref": "#/definitions/Post"
+                }
+                },
+              "400":{
+                "description": "Failed, Bad post data."
+              }
+            }
+          }
+        },
+        "/feed/post/{id}": {
+          "parameters": [
+            {
+              "name": "id",
+              "in": "path",
+              "required": true,
+              "description": "Id of Post that we want to get",
+              "type": "string"
+            }
+          ],
+          "get":{
+            "tags": [
+              "Get Post"
+            ],
+            "description": "Get single post in system by ID, before try it add Bearer <token> to Authorize",
+            "security": [
+              {
+                  "Bearer": []
+              }
+            ],
+            "responses": {
+              "200":{
+                "description": "OK",
+                "schema":{
+                  "$ref": "#/definitions/Post"
+                }
+              },
+              "404":{
+                "description": "Failed. Post not found."
+              }
+            }
+          },
+          "put": {
+            "tags": ["Update Post"],
+            "description": "Update post with given ID, before try it add Bearer <token> to Authorize",
+            "security": [
+              {
+                  "Bearer": []
+              }
+            ],
+            "parameters": [
+              {
+                "name": "body",
+                "in": "body",
+                "required": true,
+                "description": "Post with new values",
+                "schema": {
+                  "$ref": "#/definitions/Post"
+                }
+              }
+            ],
+            "produces": ["application/json"],
+            "responses": {
+              "200": {
+                "description": "Post updated.",
+                "schema": {
+                  "$ref": "#/definitions/Post"
+                }
+                },
+              "400":{
+                "description": "Failed, Bad post data."
+              }
+            }
+          },
+          "delete": {
+            "tags": [
+              "Delete Post"
+            ],
+            "description": "Delete post with given ID, before try it add Bearer <token> to Authorize",
+            "security": [
+              {
+                  "Bearer": []
+              }
+            ],
+            "responses": {
+              "200":{
+                "description": "OK",
+                "schema":{
+                  "$ref": "#/definitions/Post"
+                }
+              },
+              "404":{
+                "description": "Failed. Cat not found."
+              }
+            }
+          }
+        }
+        
+      }
+  }
+  
+    
+  

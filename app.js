@@ -12,6 +12,10 @@ const authRoutes = require('./routes/auth');
 
 const MONGODB_URI = process.env.MONGO_DB_URI
 
+const swaggerUi = require('swagger-ui-express'),
+swaggerDocument = require('./swagger.json')
+
+
 // express 4.16-dan asagi versiyalarda body-parser istifade olunur 
 // app.use(bodyParser.json());
 
@@ -65,6 +69,12 @@ app.use((error, req, res, next) => {
     const data = error.data;
     res.status(status).json({message: message, data: data})
 })
+
+app.use(
+    '/api-docs',
+    swaggerUi.serve, 
+    swaggerUi.setup(swaggerDocument)
+  );
 
 mongoose.connect(
     MONGODB_URI,

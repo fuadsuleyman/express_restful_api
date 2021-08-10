@@ -116,13 +116,18 @@ exports.createPost = async (req, res, next) => {
         error.statusCode = 422;
         throw error;
     }
-    if(!req.file) {
-        const error = new Error('No images provided.');
-        error.statusCode = 422;
-        throw error;
-    }
+    // I comment below for swagger
+    // if(!req.file) {
+    //     const error = new Error('No images provided.');
+    //     error.statusCode = 422;
+    //     throw error;
+    // }
     // bu asagidaki req.file.path mutlet vasitesi ile yaranir, app.js de app.use(mutler) ile
-    const imageUrl = req.file.path;
+    let imageUrl = "";
+    if(req.file){
+        imageUrl = req.file.path
+    }
+    // const imageUrl = req.file.path;
     const content = req.body.content;
     const title = req.body.title;
     let creator;
@@ -268,15 +273,19 @@ exports.updatePost = async (req, res, next) => {
     }
     const title = req.body.title;
     const content = req.body.content;
-    let imageUrl = req.body.image;
+    let imageUrl = "";
+    if(req.body.image){
+        imageUrl = req.body.image;
+    }
     if(req.file) {
         imageUrl = req.file.path;
     }
-    if(!imageUrl) {
-        const error = new Error('No file picked.');
-        error.statusCode = 422;
-        throw error;
-    }
+    // I comment below for swagger
+    // if(!imageUrl) {
+    //     const error = new Error('No file picked.');
+    //     error.statusCode = 422;
+    //     throw error;
+    // }
     try {
         const post = await Post.findById(postId).populate('creator');
     
@@ -290,7 +299,7 @@ exports.updatePost = async (req, res, next) => {
             error.statusCode = 403;
             throw error;
         }
-        if(imageUrl !== post.imageUrl){
+        if(imageUrl !== undefined && imageUrl !== post.imageUrl){
             clearImage(post.imageUrl);
         }
         post.title = title;
@@ -386,6 +395,9 @@ exports.deletePost = async (req, res, next) => {
 }
 
 const clearImage = filePath => {
-    filePath = path.join(__dirname, '..', filePath);
-    fs.unlink(filePath, err => console.log(err));
+    if(filePath !== undefined){
+        filePath = path.join(__dirname, '..', filePath);
+        fs.unlink(filePath, err => console.log(err));
+    }
+    
 }

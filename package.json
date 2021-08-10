@@ -5,7 +5,9 @@
   "main": "app.js",
   "scripts": {
     "test": "mocha --timeout 10000",
-    "start": "nodemon app.js"
+    "start": "NODE_ENV=production MONGO_DB_URI=mongodb+srv://fuads:wLoyopyig03cXY9a@cluster0.oepjk.mongodb.net/feedDB?retryWrites=true&w=majority node app.js",
+    "start-server": "node app.js",
+    "start:dev": "nodemon app.js"
   },
   "author": "Fuad Suleymanov",
   "license": "ISC",
@@ -14,6 +16,7 @@
     "body-parser": "^1.19.0",
     "express": "^4.17.1",
     "express-validator": "^6.12.0",
+    "hamlet": "^0.3.3",
     "jsonwebtoken": "^8.5.1",
     "mongoose": "^5.13.2",
     "multer": "^1.4.2",

@@ -4,6 +4,7 @@ const express = require('express');
 const bodyParser = require('body-parser');
 const mongoose = require('mongoose');
 const multer = require('multer');
+const helmet = require('helmet');
 
 const app = express();
 
@@ -15,6 +16,7 @@ const MONGODB_URI = process.env.MONGO_DB_URI
 const swaggerUi = require('swagger-ui-express'),
 swaggerDocument = require('./swagger.json')
 
+app.use(helmet());
 
 // express 4.16-dan asagi versiyalarda body-parser istifade olunur 
 // app.use(bodyParser.json());
@@ -81,7 +83,7 @@ mongoose.connect(
     {useNewUrlParser: true, useUnifiedTopology: true, useFindAndModify: false}
     )
     .then(result => {
-        const server = app.listen(8080);
+        const server = app.listen(process.env.PORT || 8080);
         const io = require('./socket').init(server);
         io.on('connection', socket => {
           console.log('Client connected');

@@ -5,18 +5,20 @@ const bodyParser = require('body-parser');
 const mongoose = require('mongoose');
 const multer = require('multer');
 const helmet = require('helmet');
+const compression = require('compression');
 
 const app = express();
 
 const feedRoutes = require('./routes/feed');
 const authRoutes = require('./routes/auth');
 
-const MONGODB_URI = process.env.MONGO_DB_URI
+const MONGODB_URI = process.env.MONGO_DB_URI;
 
 const swaggerUi = require('swagger-ui-express'),
 swaggerDocument = require('./swagger.json')
 
 app.use(helmet());
+app.use(compression());
 
 // express 4.16-dan asagi versiyalarda body-parser istifade olunur 
 // app.use(bodyParser.json());

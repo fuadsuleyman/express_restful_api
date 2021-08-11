@@ -127,7 +127,7 @@
         "/auth/status": {
           "get": {
             "tags": ["Get Status"],
-            "description": "Get status of authorized in system user, before try it add Bearer <token> to Authorize",
+            "description": "Get status of authorized in system user, before try it add Bearer token to Authorize in above (try it - login api and get token)",
             "security": [
               {
                   "Bearer": []
@@ -146,7 +146,7 @@
         "/auth/update-status": {
           "patch": {
             "tags": ["Update Status"],
-            "description": "Update status of authorized in system user, before try it add Bearer <token> to Authorize",
+            "description": "Update status of authorized in system user, before try it add Bearer token to Authorize in above (try it - login api and get token)",
             "security": [
               {
                   "Bearer": []
@@ -179,7 +179,7 @@
         "/feed/posts": {
           "get": {
             "tags": ["Get Posts"],
-            "description": "Get all posts in system, before try it add Bearer <token> to Authorize",
+            "description": "Get all posts in system, before try it add Bearer token to Authorize in above (try it - login api and get token)",
             "security": [
               {
                   "Bearer": []
@@ -198,7 +198,7 @@
         "/feed/post": {
           "post": {
             "tags": ["Create Post"],
-            "description": "Create new post in system, before try it add Bearer <token> to Authorize",
+            "description": "Create new post in system, before try it add Bearer token to Authorize in above (try it - login api and get token)",
             "security": [
               {
                   "Bearer": []
@@ -242,7 +242,7 @@
             "tags": [
               "Get Post"
             ],
-            "description": "Get single post in system by ID, before try it add Bearer <token> to Authorize",
+            "description": "Get single post in system by ID, before try it add Bearer token to Authorize in above (try it - login api and get token)",
             "security": [
               {
                   "Bearer": []
@@ -262,7 +262,7 @@
           },
           "put": {
             "tags": ["Update Post"],
-            "description": "Update post with given ID, before try it add Bearer <token> to Authorize",
+            "description": "Update post with given ID, before try it add Bearer token to Authorize in above (try it - login api and get token)",
             "security": [
               {
                   "Bearer": []
@@ -296,7 +296,7 @@
             "tags": [
               "Delete Post"
             ],
-            "description": "Delete post with given ID, before try it add Bearer <token> to Authorize",
+            "description": "Delete post with given ID, before try it add Bearer token to Authorize in above (try it - login api and get token)",
             "security": [
               {
                   "Bearer": []
